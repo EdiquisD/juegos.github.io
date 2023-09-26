@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atrapar al Ratón</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1{
+            color: white;
+            background-color: #6120D3;
+        }
+
+        #raton {
+            
+           
+           
+            position: absolute;
+            cursor: pointer;
+        }
+
+        #puntuacion {
+            font-size: 24px;
+        }
+        #saludo{
+            color: #6120D3;
+        }
+        .contenido{
+            margin: 0 auto;
+            background-color: red;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Atrapa al Ratón</h1>
+    <P  id="saludo"></P>
+    <p>Haz clic en el ratón para atraparlo. ¡Atrapa la mayor cantidad posible en 30 segundos!</p>
+    <p>Puntuación: <span id="puntuacion">0</span></p>
+
+    <div id="raton"><img src="raton1.png" alt="" width="120" height="90"></div>
+
+    <script>
+        
+        let saludo= prompt("ingrese su nombre"); 
+        document.getElementById("saludo").innerHTML="Hola "+saludo+", Bievenido, te saluda Edy";
+        const raton = document.getElementById('raton');
+        const puntuacionElemento = document.getElementById('puntuacion');
+        let puntuacion = 0;
+        let tiempoRestante = 30; // 30 segundos
+
+        raton.addEventListener('mouseover', moverRaton);
+        raton.addEventListener('click', atraparRaton);
+
+        function moverRaton() {
+            const maxX = window.innerWidth - 50;
+            const maxY = window.innerHeight - 50;
+            const nuevaX = Math.random() * maxX;
+            const nuevaY = Math.random() * maxY;
+            raton.style.left = nuevaX + 'px';
+            raton.style.top = nuevaY + 'px';
+        }
+
+        function atraparRaton() {
+            puntuacion++;
+            puntuacionElemento.textContent = puntuacion;
+            moverRaton();
+        }
+
+        function actualizarTiempo() {
+            if (tiempoRestante > 0) {
+                tiempoRestante--;
+                setTimeout(actualizarTiempo, 1000);
+            } else {
+                raton.removeEventListener('mouseover', moverRaton);
+                raton.removeEventListener('click', atraparRaton);
+                alert(`¡Tiempo agotado! Puntuación final: ${puntuacion}`);
+            }
+        }
+
+        actualizarTiempo();
+
+        
+    </script>
+
+    
+</body>
+</html>
